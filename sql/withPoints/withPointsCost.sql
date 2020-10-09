@@ -25,17 +25,21 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-********************************************************************PGR-GNU*/
+ ********************************************************************PGR-GNU*/
 
-/*
-ONE TO ONE
-*/
 
+----------------------
+-- pgr_withPointsCost
+----------------------
+
+
+-- ONE TO ONE
 CREATE OR REPLACE FUNCTION pgr_withPointsCost(
-    edges_sql TEXT,
-    points_sql TEXT,
-    BIGINT,
-    BIGINT,
+    TEXT, -- edges_sql (required)
+    TEXT, -- points_sql (required)
+    BIGINT, -- end_pid (required)
+    BIGINT, -- end_pid (required)
+
     directed BOOLEAN DEFAULT true,
     driving_side CHAR DEFAULT 'b', -- 'r'/'l'/'b'/NULL
 
@@ -47,19 +51,18 @@ $BODY$
     SELECT $3, $4, a.agg_cost
     FROM _pgr_withPoints(_pgr_get_statement($1), $2, ARRAY[$3]::BIGINT[], ARRAY[$4]::BIGINT[], $5, $6, TRUE, TRUE) AS a;
 $BODY$
-LANGUAGE sql VOLATILE
+LANGUAGE sql VOLATILE STRICT
 COST 100
 ROWS 1000;
 
-/*
-ONE TO MANY
-*/
 
+-- ONE TO MANY
 CREATE OR REPLACE FUNCTION pgr_withPointsCost(
-    edges_sql TEXT,
-    points_sql TEXT,
-    BIGINT,
-    end_pids ANYARRAY,
+    TEXT, -- edges_sql (required)
+    TEXT, -- points_sql (required)
+    BIGINT, -- end_pid (required)
+    ANYARRAY, -- end_pid (required)
+
     directed BOOLEAN DEFAULT true,
     driving_side CHAR DEFAULT 'b', -- 'r'/'l'/'b'/NULL
 
@@ -71,19 +74,18 @@ $BODY$
     SELECT $3, a.end_pid, a.agg_cost
     FROM _pgr_withPoints(_pgr_get_statement($1), $2, ARRAY[$3]::BIGINT[], $4::BIGINT[], $5, $6, TRUE, TRUE) AS a;
 $BODY$
-LANGUAGE sql VOLATILE
+LANGUAGE sql VOLATILE STRICT
 COST 100
 ROWS 1000;
 
-/*
-MANY TO ONE
-*/
 
+-- MANY TO ONE
 CREATE OR REPLACE FUNCTION pgr_withPointsCost(
-    edges_sql TEXT,
-    points_sql TEXT,
-    start_pids ANYARRAY,
-    BIGINT,
+    TEXT, -- edges_sql (required)
+    TEXT, -- points_sql (required)
+    ANYARRAY, -- end_pid (required)
+    BIGINT, -- end_pid (required)
+
     directed BOOLEAN DEFAULT true,
     driving_side CHAR DEFAULT 'b', -- 'r'/'l'/'b'/NULL
 
@@ -95,19 +97,18 @@ $BODY$
     SELECT a.start_pid, $4, a.agg_cost
     FROM _pgr_withPoints(_pgr_get_statement($1), $2, $3::BIGINT[], ARRAY[$4]::BIGINT[], $5, $6, TRUE, TRUE) AS a;
 $BODY$
-LANGUAGE sql VOLATILE
+LANGUAGE sql VOLATILE STRICT
 COST 100
 ROWS 1000;
 
-/*
-MANY TO MANY
-*/
 
+-- MANY TO MANY
 CREATE OR REPLACE FUNCTION pgr_withPointsCost(
-    edges_sql TEXT,
-    points_sql TEXT,
-    start_pids ANYARRAY,
-    end_pids ANYARRAY,
+    TEXT, -- edges_sql (required)
+    TEXT, -- points_sql (required)
+    ANYARRAY, -- end_pid (required)
+    ANYARRAY, -- end_pid (required)
+
     directed BOOLEAN DEFAULT true,
     driving_side CHAR DEFAULT 'b', -- 'r'/'l'/'b'/NULL
 
@@ -119,6 +120,72 @@ $BODY$
     SELECT a.start_pid, a.end_pid, a.agg_cost
     FROM _pgr_withPoints(_pgr_get_statement($1), $2, $3::BIGINT[], $4::BIGINT[], $5,  $6, TRUE, TRUE) AS a;
 $BODY$
-LANGUAGE sql VOLATILE
+LANGUAGE sql VOLATILE STRICT
 COST 100
 ROWS 1000;
+
+
+-- COMMENTS
+
+
+COMMENT ON FUNCTION pgr_withPointsCost(TEXT, TEXT, BIGINT, BIGINT, BOOLEAN, CHAR)
+IS 'pgr_withPointsCost (One to One)
+- PROPOSED
+- Parameters:
+    - Edges SQL with columns: id, source, target, cost [,reverse_cost]
+    - Points SQL with columns: [pid], edge_id, fraction[,side]
+    - From vertex/point identifier
+    - To vertex/point identifier
+- Optional Parameters
+    - directed := ''true''
+    - driving_side := ''b''
+- Documentation:
+  - ${PGROUTING_DOC_LINK}/pgr_withPointsCost.html
+';
+
+
+COMMENT ON FUNCTION pgr_withPointsCost(TEXT, TEXT, BIGINT, ANYARRAY, BOOLEAN, CHAR)
+IS 'pgr_withPointsCost (One to Many)
+- PROPOSED
+- Parameters:
+    - Edges SQL with columns: id, source, target, cost [,reverse_cost]
+    - Points SQL with columns: [pid], edge_id, fraction[,side]
+    - From vertex/point identifier
+    - To ARRAY[vertices/points identifiers]
+- Optional Parameters
+    - directed := ''true''
+    - driving_side := ''b''
+- Documentation:
+  - ${PGROUTING_DOC_LINK}/pgr_withPointsCost.html
+';
+
+
+COMMENT ON FUNCTION pgr_withPointsCost(TEXT, TEXT, ANYARRAY, BIGINT, BOOLEAN, CHAR)
+IS 'pgr_withPointsCost (Many to One)
+- PROPOSED
+- Parameters:
+    - Edges SQL with columns: id, source, target, cost [,reverse_cost]
+    - Points SQL with columns: [pid], edge_id, fraction[,side]
+    - From ARRAY[vertices/points identifiers]
+    - To vertex/point identifier
+- Optional Parameters
+    - directed := ''true''
+    - driving_side := ''b''
+- Documentation:
+  - ${PGROUTING_DOC_LINK}/pgr_withPointsCost.html
+';
+
+
+COMMENT ON FUNCTION pgr_withPointsCost(TEXT, TEXT, ANYARRAY, ANYARRAY, BOOLEAN, CHAR)
+IS 'pgr_withPointsCost (Many to Many)
+- Parameters:
+    - Edges SQL with columns: id, source, target, cost [,reverse_cost]
+    - Points SQL with columns: [pid], edge_id, fraction[,side]
+    - From ARRAY[vertices/points identifiers]
+    - To ARRAY[vertices/points identifiers]
+- Optional Parameters
+    - directed := ''true''
+    - driving_side := ''b''
+- Documentation:
+  - ${PGROUTING_DOC_LINK}/pgr_withPointsCost.html
+';

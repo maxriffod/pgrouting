@@ -20,7 +20,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-********************************************************************PGR-GNU*/
+ ********************************************************************PGR-GNU*/
 #ifndef INCLUDE_C_COMMON_POSTGRES_CONNECTION_H_
 #define INCLUDE_C_COMMON_POSTGRES_CONNECTION_H_
 #pragma once
@@ -28,7 +28,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 
 #ifdef __GNUC__
+#if __GNUC__ > 5
+#pragma GCC diagnostic ignored "-Wpedantic"
+#else
 #pragma GCC diagnostic ignored "-pedantic"
+#endif
 #endif
 
 #ifdef __clang__
@@ -46,6 +50,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 #ifdef __GNUC__
 #pragma GCC diagnostic ignored "-Wsign-conversion"
+#pragma GCC diagnostic ignored "-Wconversion"
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 #endif
 
@@ -60,6 +65,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #include <funcapi.h>
 
 #ifdef __GNUC__
+#pragma GCC diagnostic pop
 #pragma GCC diagnostic pop
 #pragma GCC diagnostic pop
 #pragma GCC diagnostic pop

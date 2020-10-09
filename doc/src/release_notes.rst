@@ -4,7 +4,7 @@
     Copyright(c) pgRouting Contributors
 
     This documentation is licensed under a Creative Commons Attribution-Share
-    Alike 3.0 License: http://creativecommons.org/licenses/by-sa/3.0/
+    Alike 3.0 License: https://creativecommons.org/licenses/by-sa/3.0/
    ****************************************************************************
 
 .. _change_log:
@@ -18,8 +18,18 @@ To see the full list of changes check the list of `Git commits <https://github.c
 
 .. changelog start
 
+* :ref:`changelog_3_1_1`
+* :ref:`changelog_3_1_0`
+* :ref:`changelog_3_0_3`
+* :ref:`changelog_3_0_2`
+* :ref:`changelog_3_0_1`
+* :ref:`changelog_3_0_0`
+* :ref:`changelog_2_6_3`
+* :ref:`changelog_2_6_2`
 * :ref:`changelog_2_6_1`
 * :ref:`changelog_2_6_0`
+* :ref:`changelog_2_5_5`
+* :ref:`changelog_2_5_4`
 * :ref:`changelog_2_5_3`
 * :ref:`changelog_2_5_2`
 * :ref:`changelog_2_5_1`
@@ -42,11 +52,301 @@ To see the full list of changes check the list of `Git commits <https://github.c
 
 .. changelog end
 
+.. _changelog_3_1_1:
+
+pgRouting 3.1.1 Release Notes
+-------------------------------------------------------------------------------
+
+To see all issues & pull requests closed by this release see the `Git closed milestone for 3.1.1
+<https://github.com/pgRouting/pgrouting/issues?utf8=%E2%9C%93&q=milestone%3A%22Release%203.1.1%22>`_ on Github.
+
+.. rubric:: Backport issues fixes
+
+* `#1616 <https://github.com/pgRouting/pgrouting/issues/1616>`__: Path evaluation on C++ not updated before the results go back to C
+
+
+.. _changelog_3_1_0:
+
+pgRouting 3.1.0 Release Notes
+-------------------------------------------------------------------------------
+
+To see all issues & pull requests closed by this release see the `Git closed milestone for 3.1.0
+<https://github.com/pgRouting/pgrouting/issues?utf8=%E2%9C%93&q=milestone%3A%22Release%203.1.0%22>`_ on Github.
+
+.. rubric:: New proposed functions
+
+* pgr_dijkstra(combinations)
+* pgr_dijkstraCost(combinations)
+
+.. rubric:: Build changes
+
+* Minimal requirement for Sphinx: version 1.8
+
+.. _changelog_3_0_3:
+
+pgRouting 3.0.3 Release Notes
+-------------------------------------------------------------------------------
+
+.. rubric:: Backport issues fixes
+
+* `#1616 <https://github.com/pgRouting/pgrouting/issues/1616>`__: Path evaluation on C++ not updated before the results go back to C
+
+
+.. _changelog_3_0_2:
+
+pgRouting 3.0.2 Release Notes
+-------------------------------------------------------------------------------
+
+To see all issues & pull requests closed by this release see the `Git closed milestone for 3.0.2
+<https://github.com/pgRouting/pgrouting/issues?utf8=%E2%9C%93&q=milestone%3A%22Release%203.0.2%22>`_ on Github.
+
+.. rubric:: Issues fixes
+
+* `#1378 <https://github.com/pgRouting/pgrouting/issues/1378>`__: Visual Studio build failing
+
+.. _changelog_3_0_1:
+
+pgRouting 3.0.1 Release Notes
+-------------------------------------------------------------------------------
+
+To see all issues & pull requests closed by this release see the `Git closed milestone for 3.0.1
+<https://github.com/pgRouting/pgrouting/issues?utf8=%E2%9C%93&q=milestone%3A%22Release%203.0.1%22>`_ on Github.
+
+.. rubric:: Issues fixes
+
+* `#232 <https://github.com/pgRouting/pgrouting/issues/232>`__:  Honor client cancel requests in C /C++ code
+
+.. _changelog_3_0_0:
+
+pgRouting 3.0.0 Release Notes
+-------------------------------------------------------------------------------
+
+To see all issues & pull requests closed by this release see the `Git closed milestone for 3.0.0
+<https://github.com/pgRouting/pgrouting/issues?utf8=%E2%9C%93&q=milestone%3A%22Release%203.0.0%22>`_ on Github.
+
+.. rubric:: Fixed Issues
+
+* `#1153 <https://github.com/pgRouting/pgrouting/issues/1153>`__: Renamed pgr_eucledianTSP to pgr_TSPeuclidean
+* `#1188 <https://github.com/pgRouting/pgrouting/issues/1188>`__: Removed CGAL dependency
+* `#1002 <https://github.com/pgRouting/pgrouting/issues/1002>`__: Fixed contraction issues:
+
+  * `#1004 <https://github.com/pgRouting/pgrouting/issues/1004>`__: Contracts when forbidden vertices do not belong to graph
+  * `#1005 <https://github.com/pgRouting/pgrouting/issues/1005>`__: Intermideate results eliminated
+  * `#1006 <https://github.com/pgRouting/pgrouting/issues/1006>`__: No loss of information
+
+.. rubric:: New functions
+
+* Kruskal family
+
+  * pgr_kruskal
+  * pgr_kruskalBFS
+  * pgr_kruskalDD
+  * pgr_kruskalDFS
+
+* Prim family
+
+  * pgr_prim
+  * pgr_primDD
+  * pgr_primDFS
+  * pgr_primBFS
+
+
+.. rubric:: Proposed moved to official on pgRouting
+
+* aStar Family
+
+  * pgr_aStar(one to many)
+  * pgr_aStar(many to one)
+  * pgr_aStar(many to many)
+  * pgr_aStarCost(one to one)
+  * pgr_aStarCost(one to many)
+  * pgr_aStarCost(many to one)
+  * pgr_aStarCost(many to many)
+  * pgr_aStarCostMatrix(one to one)
+  * pgr_aStarCostMatrix(one to many)
+  * pgr_aStarCostMatrix(many to one)
+  * pgr_aStarCostMatrix(many to many)
+
+* bdAstar Family
+
+  * pgr_bdAstar(one to many)
+  * pgr_bdAstar(many to one)
+  * pgr_bdAstar(many to many)
+  * pgr_bdAstarCost(one to one)
+  * pgr_bdAstarCost(one to many)
+  * pgr_bdAstarCost(many to one)
+  * pgr_bdAstarCost(many to many)
+  * pgr_bdAstarCostMatrix(one to one)
+  * pgr_bdAstarCostMatrix(one to many)
+  * pgr_bdAstarCostMatrix(many to one)
+  * pgr_bdAstarCostMatrix(many to many)
+
+* bdDijkstra Family
+
+  * pgr_bdDijkstra(one to many)
+  * pgr_bdDijkstra(many to one)
+  * pgr_bdDijkstra(many to many)
+  * pgr_bdDijkstraCost(one to one)
+  * pgr_bdDijkstraCost(one to many)
+  * pgr_bdDijkstraCost(many to one)
+  * pgr_bdDijkstraCost(many to many)
+  * pgr_bdDijkstraCostMatrix(one to one)
+  * pgr_bdDijkstraCostMatrix(one to many)
+  * pgr_bdDijkstraCostMatrix(many to one)
+  * pgr_bdDijkstraCostMatrix(many to many)
+
+* Flow Family
+
+  * pgr_pushRelabel(one to one)
+  * pgr_pushRelabel(one to many)
+  * pgr_pushRelabel(many to one)
+  * pgr_pushRelabel(many to many)
+  * pgr_edmondsKarp(one to one)
+  * pgr_edmondsKarp(one to many)
+  * pgr_edmondsKarp(many to one)
+  * pgr_edmondsKarp(many to many)
+  * pgr_boykovKolmogorov (one to one)
+  * pgr_boykovKolmogorov (one to many)
+  * pgr_boykovKolmogorov (many to one)
+  * pgr_boykovKolmogorov (many to many)
+  * pgr_maxCardinalityMatching
+  * pgr_maxFlow
+  * pgr_edgeDisjointPaths(one to one)
+  * pgr_edgeDisjointPaths(one to many)
+  * pgr_edgeDisjointPaths(many to one)
+  * pgr_edgeDisjointPaths(many to many)
+
+* Components family
+
+  * pgr_connectedComponents
+  * pgr_strongComponents
+  * pgr_biconnectedComponents
+  * pgr_articulationPoints
+  * pgr_bridges
+
+* Contraction:
+
+  * Removed unnecessary column seq
+  * Bug Fixes
+
+
+.. rubric:: New Experimental functions
+
+* pgr_maxFlowMinCost
+* pgr_maxFlowMinCost_Cost
+* pgr_extractVertices
+* pgr_turnRestrictedPath
+* pgr_stoerWagner
+* pgr_dagShortestpath
+* pgr_topologicalSort
+* pgr_transitiveClosure
+* VRP category
+
+  * pgr_pickDeliverEuclidean
+  * pgr_pickDeliver
+
+* Chinese Postman family
+
+  * pgr_chinesePostman
+  * pgr_chinesePostmanCost
+
+* Breadth First Search family
+
+  * pgr_breadthFirstSearch
+  * pgr_binaryBreadthFirstSearch
+
+* Bellman Ford family
+
+  * pgr_bellmanFord
+  * pgr_edwardMoore
+
+.. rubric:: Moved to legacy
+
+* Experimental functions
+
+  * pgr_labelGraph  -  Use the components family of functions instead.
+  * Max flow - functions were renamed on v2.5.0
+
+    * pgr_maxFlowPushRelabel
+    * pgr_maxFlowBoykovKolmogorov
+    * pgr_maxFlowEdmondsKarp
+    * pgr_maximumcardinalitymatching
+
+  * VRP
+
+    * pgr_gsoc_vrppdtw
+
+* TSP old signatures
+* pgr_pointsAsPolygon
+* pgr_alphaShape old signature
+
+
+.. _changelog_2_6_3:
+
+pgRouting 2.6.3 Release Notes
+-------------------------------------------------------------------------------
+
+To see the issues closed by this release see the `Git closed milestone for 2.6.3 <https://github.com/pgRouting/pgrouting/issues?utf8=%E2%9C%93&q=milestone%3A%22Release%202.6.3%22%20>`_ on Github.
+
+.. rubric:: Bug fixes
+
+* `#1219 <https://github.com/pgRouting/pgrouting/pull/1219>`__ Implicit cast for via_path integer to text
+* `#1193 <https://github.com/pgRouting/pgrouting/pull/1193>`__ Fixed pgr_pointsAsPolygon breaking when comparing strings in WHERE clause
+* `#1185 <https://github.com/pgRouting/pgrouting/pull/1185>`__ Improve FindPostgreSQL.cmake
+
+
+.. _changelog_2_6_2:
+
+pgRouting 2.6.2 Release Notes
+-------------------------------------------------------------------------------
+
+To see the issues closed by this release see the `Git closed milestone for 2.6.2 <https://github.com/pgRouting/pgrouting/issues?utf8=%E2%9C%93&q=milestone%3A%22Release%202.6.2%22%20>`_ on Github.
+
+.. rubric:: Bug fixes
+
+* `#1152 <https://github.com/pgRouting/pgrouting/issues/1152>`__ Fixes driving distance when vertex is not part of the graph
+* `#1098 <https://github.com/pgRouting/pgrouting/issues/1098>`__ Fixes windows test
+* `#1165 <https://github.com/pgRouting/pgrouting/issues/1165>`__ Fixes build for python3 and perl5
+
 .. _changelog_2_6_1:
 
 pgRouting 2.6.1 Release Notes
 -------------------------------------------------------------------------------
 
+To see the issues closed by this release see the `Git closed milestone for 2.6.1 <https://github.com/pgRouting/pgrouting/issues?utf8=%E2%9C%93&q=milestone%3A%22Release%202.6.1%22%20>`_ on Github.
+
+* Fixes server crash on several functions.
+
+  * pgr_floydWarshall
+  * pgr_johnson
+  * pgr_astar
+  * pgr_bdAstar
+  * pgr_bdDijstra
+  * pgr_alphashape
+  * pgr_dijkstraCostMatrix
+  * pgr_dijkstra
+  * pgr_dijkstraCost
+  * pgr_drivingDistance
+  * pgr_KSP
+  * pgr_dijkstraVia (proposed)
+  * pgr_boykovKolmogorov (proposed)
+  * pgr_edgeDisjointPaths (proposed)
+  * pgr_edmondsKarp (proposed)
+  * pgr_maxCardinalityMatch (proposed)
+  * pgr_maxFlow (proposed)
+  * pgr_withPoints (proposed)
+  * pgr_withPointsCost (proposed)
+  * pgr_withPointsKSP (proposed)
+  * pgr_withPointsDD (proposed)
+  * pgr_withPointsCostMatrix (proposed)
+  * pgr_contractGraph (experimental)
+  * pgr_pushRelabel (experimental)
+  * pgr_vrpOneDepot (experimental)
+  * pgr_gsoc_vrppdtw (experimental)
+  * Fixes for deprecated functions where also applied but not tested
+
+* Removed compilation warning for g++8
+* Fixed a fallthrugh on Astar and bdAstar.
 
 .. _changelog_2_6_0:
 
@@ -82,6 +382,58 @@ To see the issues closed by this release see the `Git closed milestone for 2.6.0
 
 * Cleaned the internal code of withPoints
 
+.. _changelog_2_5_5:
+
+pgRouting 2.5.5 Release Notes
+-------------------------------------------------------------------------------
+
+To see the issues closed by this release see the `Git closed milestone for 2.5.5 <https://github.com/pgRouting/pgrouting/issues?utf8=%E2%9C%93&q=milestone%3A%22Release%202.5.5%22%20>`_ on Github.
+
+.. rubric:: Bug fixes
+
+* Fixes driving distance when vertex is not part of the graph
+* Fixes windows test
+* Fixes build for python3 and perl5
+
+.. _changelog_2_5_4:
+
+pgRouting 2.5.4 Release Notes
+-------------------------------------------------------------------------------
+
+To see the issues closed by this release see the `Git closed milestone for 2.5.4 <https://github.com/pgRouting/pgrouting/issues?utf8=%E2%9C%93&q=milestone%3A%22Release%202.5.4%22%20>`_ on Github.
+
+* Fixes server crash on several functions.
+
+  * pgr_floydWarshall
+  * pgr_johnson
+  * pgr_astar
+  * pgr_bdAstar
+  * pgr_bdDijstra
+  * pgr_alphashape
+  * pgr_dijkstraCostMatrix
+  * pgr_dijkstra
+  * pgr_dijkstraCost
+  * pgr_drivingDistance
+  * pgr_KSP
+  * pgr_dijkstraVia (proposed)
+  * pgr_boykovKolmogorov (proposed)
+  * pgr_edgeDisjointPaths (proposed)
+  * pgr_edmondsKarp (proposed)
+  * pgr_maxCardinalityMatch (proposed)
+  * pgr_maxFlow (proposed)
+  * pgr_withPoints (proposed)
+  * pgr_withPointsCost (proposed)
+  * pgr_withPointsKSP (proposed)
+  * pgr_withPointsDD (proposed)
+  * pgr_withPointsCostMatrix (proposed)
+  * pgr_contractGraph (experimental)
+  * pgr_pushRelabel (experimental)
+  * pgr_vrpOneDepot (experimental)
+  * pgr_gsoc_vrppdtw (experimental)
+  * Fixes for deprecated functions where also applied but not tested
+
+* Removed compilation warning for g++8
+* Fixed a fallthrugh on Astar and bdAstar.
 
 .. _changelog_2_5_3:
 
@@ -584,7 +936,7 @@ As a result of this effort:
 * Support for table SCHEMA in function parameters
 * Support for ``st_`` PostGIS function prefix
 * Added ``pgr_`` prefix to functions and types
-* Better documentation: http://docs.pgrouting.org
+* Better documentation: https://docs.pgrouting.org
 * shooting_star is discontinued
 
 

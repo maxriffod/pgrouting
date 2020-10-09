@@ -2,7 +2,7 @@
 
 # Locale
 
-Currently the setup is for  `es` `ru` `ja` `it` `de` `fr` 
+Currently the setup is for  `es` `ru` `ja` `it` `de` `fr`
 
 ## Building the LOCALE:
 
@@ -17,13 +17,33 @@ cd ..
 sphinx-intl update -d locale
 ```
 
+When there is a new resource
+```
+sphinx-intl update-txconfig-resources --locale-dir locale --pot-dir locale/pot --transifex-project-name pgrouting
+```
+
+
 review
 ```
 for f in locale/pot/*; do echo $f; grep $f .tx/config; done
-for f in `grep '\.pot' .tx/config | sed 's/^.*pot\/\(.*\)$/\1/' | grep '\.pot'` ; do  echo $f; ls locale/pot/* | grep $f  ; done 
+for f in `grep '\.pot' .tx/config | sed 's/^.*pot\/\(.*\)$/\1/' | grep '\.pot'` ; do  echo $f; ls locale/pot/* | grep $f  ; done
 ```
 
 commit changes and push
+
+## Cleanup unused messages
+
+Hint
+```
+for f in ${FILE}
+do
+    echo one ${f}
+    grep '#~' ${f}
+    msgattrib --output-file=${f} --no-obsolete ${f}
+    echo two
+    grep '#~' ${f}
+done
+```
 
 
 ## MANAGERS: Interaction with transifex:

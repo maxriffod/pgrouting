@@ -1,5 +1,5 @@
 /*PGR-GNU*****************************************************************
-File: pgr_bdAstar.hpp 
+File: pgr_bdAstar.hpp
 
 Generated with Template by:
 Copyright (c) 2015 pgRouting developers
@@ -25,7 +25,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-********************************************************************PGR-GNU*/
+ ********************************************************************PGR-GNU*/
 
 #ifndef INCLUDE_BDASTAR_PGR_BDASTAR_HPP_
 #define INCLUDE_BDASTAR_PGR_BDASTAR_HPP_
@@ -167,16 +167,22 @@ class Pgr_bdAstar : public Pgr_bidirectional<G> {
         switch (m_heuristic) {
             case 0:
                 current = 0;
+                break;
             case 1:
                 current = std::fabs((std::max)(dx, dy)) * m_factor;
+                break;
             case 2:
                 current = std::fabs((std::min)(dx, dy)) * m_factor;
+                break;
             case 3:
                 current = (dx * dx + dy * dy) * m_factor * m_factor;
+                break;
             case 4:
                 current = std::sqrt(dx * dx + dy * dy) * m_factor;
+                break;
             case 5:
                 current = (std::fabs(dx) + std::fabs(dy)) * m_factor;
+                break;
             default:
                 current = 0;
         }

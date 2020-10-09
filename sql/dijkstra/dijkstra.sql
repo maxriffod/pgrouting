@@ -6,6 +6,10 @@ Mail: project@pgrouting.org
 Copyright (c) 2015 Celia Virginia Vergara Castillo
 mail: vicky_vergara@hotmail.com
 
+Copyright (c) 2020 The combinations_sql signature is added by Mahmoud SAKR
+and Esteban ZIMANYI
+mail: m_attia_sakr@yahoo.com, estebanzimanyi@gmail.com
+
 ------
 
 This program is free software; you can redistribute it and/or modify
@@ -22,128 +26,190 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-********************************************************************PGR-GNU*/
+ ********************************************************************PGR-GNU*/
 
--- V3 signature 1 to 1
+---------------
+-- pgr_dijkstra
+---------------
+
+-- ONE to ONE
 CREATE OR REPLACE FUNCTION pgr_dijkstra(
-    edges_sql TEXT,
-    start_vid BIGINT,
-    end_vid BIGINT,
+    TEXT,   -- edges_sql (required)
+    BIGINT, -- from_vid (required)
+    BIGINT, -- to_vid (required)
 
-    OUT seq integer,
-    OUT path_seq integer,
-    OUT node BIGINT,
-    OUT edge BIGINT,
-    OUT cost float,
-    OUT agg_cost float)
-RETURNS SETOF RECORD AS
-$BODY$
-    SELECT a.seq, a.path_seq, a.node, a.edge, a.cost, a.agg_cost
-    FROM _pgr_dijkstra(_pgr_get_statement($1), ARRAY[$2]::BIGINT[], ARRAY[$3]::BIGINT[], true, false, true) AS a;
-$BODY$
-LANGUAGE sql VOLATILE
-COST 100
-ROWS 1000;
-
-
--- V3 signature 1 to 1
-CREATE OR REPLACE FUNCTION pgr_dijkstra(
-    edges_sql TEXT,
-    start_vid BIGINT,
-    end_vid BIGINT,
-    directed BOOLEAN,
-
-    OUT seq integer,
-    OUT path_seq integer,
-    OUT node BIGINT,
-    OUT edge BIGINT,
-    OUT cost float,
-    OUT agg_cost float)
-RETURNS SETOF RECORD AS
-$BODY$
-    SELECT a.seq, a.path_seq, a.node, a.edge, a.cost, a.agg_cost
-    FROM _pgr_dijkstra(_pgr_get_statement($1), ARRAY[$2]::BIGINT[], ARRAY[$3]::BIGINT[], directed, false, true) AS a;
-$BODY$
-LANGUAGE sql VOLATILE
-COST 100
-ROWS 1000;
-
-
-
-CREATE OR REPLACE FUNCTION pgr_dijkstra(
-    edges_sql TEXT,
-    start_vid BIGINT,
-    end_vids ANYARRAY,
     directed BOOLEAN DEFAULT true,
 
-    OUT seq integer,
-    OUT path_seq integer,
+    OUT seq INTEGER,
+    OUT path_seq INTEGER,
+    OUT node BIGINT,
+    OUT edge BIGINT,
+    OUT cost FLOAT,
+    OUT agg_cost FLOAT)
+RETURNS SETOF RECORD AS
+$BODY$
+    SELECT a.seq, a.path_seq, a.node, a.edge, a.cost, a.agg_cost
+    FROM _pgr_dijkstra(_pgr_get_statement($1), ARRAY[$2]::BIGINT[], ARRAY[$3]::BIGINT[], $4, false, true) AS a;
+$BODY$
+LANGUAGE sql VOLATILE STRICT
+COST 100
+ROWS 1000;
+
+-- ONE to MANY
+CREATE OR REPLACE FUNCTION pgr_dijkstra(
+    TEXT,     -- edges_sql (required)
+    BIGINT,   -- from_vid (required)
+    ANYARRAY, -- to_vids (required)
+
+    directed BOOLEAN DEFAULT true,
+
+    OUT seq INTEGER,
+    OUT path_seq INTEGER,
     OUT end_vid BIGINT,
     OUT node BIGINT,
     OUT edge BIGINT,
-    OUT cost float,
-    OUT agg_cost float)
+    OUT cost FLOAT,
+    OUT agg_cost FLOAT)
 RETURNS SETOF RECORD AS
 $BODY$
     SELECT a.seq, a.path_seq, a.end_vid, a.node, a.edge, a.cost, a.agg_cost
     FROM _pgr_dijkstra(_pgr_get_statement($1), ARRAY[$2]::BIGINT[], $3::BIGINT[], $4, false, true) AS a;
 $BODY$
-LANGUAGE sql VOLATILE
+LANGUAGE sql VOLATILE STRICT
 COST 100
 ROWS 1000;
 
-
-
-
+-- MANY to ONE
 CREATE OR REPLACE FUNCTION pgr_dijkstra(
-    edges_sql TEXT,
-    start_vids ANYARRAY,
-    end_vid BIGINT,
+    TEXT,     -- edges_sql (required)
+    ANYARRAY, -- from_vids (required)
+    BIGINT,   -- to_vid (required)
+
     directed BOOLEAN DEFAULT true,
-    OUT seq integer,
-    OUT path_seq integer,
+
+    OUT seq INTEGER,
+    OUT path_seq INTEGER,
     OUT start_vid BIGINT,
     OUT node BIGINT,
     OUT edge BIGINT,
-    OUT cost float,
-    OUT agg_cost float)
+    OUT cost FLOAT,
+    OUT agg_cost FLOAT)
 RETURNS SETOF RECORD AS
 $BODY$
     SELECT a.seq, a.path_seq, a.start_vid, a.node, a.edge, a.cost, a.agg_cost
     FROM _pgr_dijkstra(_pgr_get_statement($1), $2::BIGINT[], ARRAY[$3]::BIGINT[], $4, false, false) AS a;
 $BODY$
-LANGUAGE sql VOLATILE
+LANGUAGE sql VOLATILE STRICT
 COST 100
 ROWS 1000;
 
-
-
-
+-- MANY to MANY
 CREATE OR REPLACE FUNCTION pgr_dijkstra(
-    edges_sql TEXT,
-    start_vids ANYARRAY,
-    end_vids ANYARRAY,
+    TEXT,     -- edges_sql (required)
+    ANYARRAY, -- from_vids (required)
+    ANYARRAY, -- to_vids (required)
+
     directed BOOLEAN DEFAULT true,
-    OUT seq integer, OUT path_seq integer,
+
+    OUT seq INTEGER,
+    OUT path_seq INTEGER,
     OUT start_vid BIGINT,
     OUT end_vid BIGINT,
     OUT node BIGINT,
     OUT edge BIGINT,
-    OUT cost float,
-    OUT agg_cost float)
+    OUT cost FLOAT,
+    OUT agg_cost FLOAT)
 RETURNS SETOF RECORD AS
 $BODY$
     SELECT a.seq, a.path_seq, a.start_vid, a.end_vid, a.node, a.edge, a.cost, a.agg_cost
     FROM _pgr_dijkstra(_pgr_get_statement($1), $2::BIGINT[], $3::BIGINT[], $4, false, true) AS a;
 $BODY$
-LANGUAGE sql VOLATILE
+LANGUAGE sql VOLATILE STRICT
 COST 100
 ROWS 1000;
 
+-- Combinations SQL signature
+CREATE OR REPLACE FUNCTION pgr_dijkstra(
+    TEXT,     -- edges_sql (required)
+    TEXT,     -- combinations_sql (required)
+
+    directed BOOLEAN DEFAULT true,
+
+    OUT seq INTEGER,
+    OUT path_seq INTEGER,
+    OUT start_vid BIGINT,
+    OUT end_vid BIGINT,
+    OUT node BIGINT,
+    OUT edge BIGINT,
+    OUT cost FLOAT,
+    OUT agg_cost FLOAT)
+RETURNS SETOF RECORD AS
+$BODY$
+    SELECT a.seq, a.path_seq, a.start_vid, a.end_vid, a.node, a.edge, a.cost, a.agg_cost
+    FROM _pgr_dijkstra(_pgr_get_statement($1), _pgr_get_statement($2), $3, false, true) AS a;
+$BODY$
+LANGUAGE sql VOLATILE STRICT
+COST 100
+ROWS 1000;
+
+
 -- COMMENTS
 
-COMMENT ON FUNCTION  pgr_dijkstra(TEXT, BIGINT, BIGINT) IS 'pgr_dijkstra(One to One)';
-COMMENT ON FUNCTION  pgr_dijkstra(TEXT, BIGINT, BIGINT, BOOLEAN) IS 'pgr_dijkstra(One to One)';
-COMMENT ON FUNCTION  pgr_dijkstra(TEXT, BIGINT, ANYARRAY, BOOLEAN) IS 'pgr_dijkstra(One to Many)';
-COMMENT ON FUNCTION  pgr_dijkstra(TEXT, ANYARRAY, BIGINT, BOOLEAN) IS 'pgr_dijkstra(Many to One)';
-COMMENT ON FUNCTION  pgr_dijkstra(TEXT, ANYARRAY, ANYARRAY, BOOLEAN) IS 'pgr_dijkstra(Many to Many)';
+COMMENT ON FUNCTION pgr_dijkstra(TEXT, BIGINT, BIGINT, BOOLEAN)
+IS 'pgr_dijkstra(One to One)
+- Parameters:
+   - Edges SQL with columns: id, source, target, cost [,reverse_cost]
+   - From vertex identifier
+   - To vertex identifier
+- Optional Parameters
+   - directed := true
+- Documentation:
+   - ${PGROUTING_DOC_LINK}/pgr_dijkstra.html
+';
+
+COMMENT ON FUNCTION pgr_dijkstra(TEXT, BIGINT, ANYARRAY, BOOLEAN)
+IS 'pgr_dijkstra(One to Many)
+- Parameters:
+   - Edges SQL with columns: id, source, target, cost [,reverse_cost]
+   - From vertex identifier
+   - To ARRAY[vertices identifiers]
+- Optional Parameters
+   - directed := true
+- Documentation:
+   - ${PGROUTING_DOC_LINK}/pgr_dijkstra.html
+';
+
+COMMENT ON FUNCTION pgr_dijkstra(TEXT, ANYARRAY, BIGINT, BOOLEAN)
+IS 'pgr_dijkstra(Many to One)
+- Parameters:
+   - Edges SQL with columns: id, source, target, cost [,reverse_cost]
+   - From ARRAY[vertices identifiers]
+   - To vertex identifier
+- Optional Parameters
+   - directed := true
+- Documentation:
+   - ${PGROUTING_DOC_LINK}/pgr_dijkstra.html
+';
+
+COMMENT ON FUNCTION pgr_dijkstra(TEXT, ANYARRAY, ANYARRAY, BOOLEAN)
+IS 'pgr_dijkstra(Many to Many)
+- Parameters:
+   - Edges SQL with columns: id, source, target, cost [,reverse_cost]
+   - From ARRAY[vertices identifiers]
+   - To ARRAY[vertices identifiers]
+- Optional Parameters
+   - directed := true
+- Documentation:
+   - ${PGROUTING_DOC_LINK}/pgr_dijkstra.html
+';
+
+COMMENT ON FUNCTION pgr_dijkstra(TEXT, TEXT, BOOLEAN)
+IS 'pgr_dijkstra(One to One)
+- Parameters:
+   - Edges SQL with columns: id, source, target, cost [,reverse_cost]
+   - Combinations SQL with columns: source, target
+- Optional Parameters
+   - directed := true
+- Documentation:
+   - ${PGROUTING_DOC_LINK}/pgr_dijkstra.html
+';
